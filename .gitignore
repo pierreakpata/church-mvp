@@ -1,0 +1,19 @@
+# Java
+/target/
+*.jar
+
+
+# Node
+/node_modules/
+dist/
+npm-debug.log
+
+
+# IDE
+/.idea/
+/.vscode/
+
+
+# Docker
+*.env
+docker-compose.override.yml

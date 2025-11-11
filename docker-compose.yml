@@ -1,0 +1,46 @@
+version: '3.8'
+
+
+services:
+  db:
+    image: postgres:15
+    container_name: church_postgres
+    environment:
+      POSTGRES_USER: church_admin
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: church_mvp
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: church_backend
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/church_mvp
+      SPRING_DATASOURCE_USERNAME: church_admin
+      SPRING_DATASOURCE_PASSWORD: secret
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    ports:
+      - "8080:8080"
+
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: church_frontend
+    depends_on:
+      - backend
+    ports:
+      - "4200:80"
+
+
+volumes:
+  pgdata:
