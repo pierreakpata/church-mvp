@@ -1,3 +1,31 @@
 spring:
   application:
-    name: church
+    name: church-backend
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/church_db
+    username: postgres
+    password: admin
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    open-in-view: false
+
+server:
+  port: 8080
+
+---
+spring:
+  profiles:
+    active: dev
+
+
+jwt:
+  secret: "change_this_for_production_very_long_random_secret_at_least_32_chars"
+  expiration-ms: 86400000 # 24h
